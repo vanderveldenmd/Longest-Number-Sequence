@@ -1,0 +1,35 @@
+#Taken from a leetcode daily coding challenge
+#the goal here is to find the longest sequence given an array of integer numbers
+#This function sorts the set of numbers and tries to iterate over the entire array, finding the consecutive sequences
+
+class Solution(object):
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums.sort()
+        longest = 0
+        curSeq = 0
+        try:
+            temp = nums[0]
+            curSeq += 1
+        except:
+            return longest
+        
+        for i in range(1, len(nums)):
+            if nums[i] == temp + 1:
+                curSeq += 1
+                temp = nums[i]
+            #Note that we can ignore duplicate values within the array because we can put them at the start or end of the array and it won't affect the longest sequence
+            elif nums[i] == temp:
+                temp = nums[i]
+            else:
+                if curSeq > longest:
+                    longest = curSeq
+                curSeq = 1
+                temp = nums[i]
+        if curSeq > longest:
+            return curSeq
+        else:
+            return longest
